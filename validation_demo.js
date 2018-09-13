@@ -33,9 +33,11 @@
     $.ajax({
       type: "GET",
       url: 'https://api.mailgun.net/v2/address/validate?callback=?',
-      data: {address: options.email,
-             api_key: options.api_key,
-             mailbox_verification: options.mailbox_verification},
+      data: {
+        address: options.email,
+        api_key: options.api_key,
+        mailbox_verification: options.mailbox_verification
+      },
       dataType: "jsonp",
       crossDomain: true,
       success: function (data, status_text) {
