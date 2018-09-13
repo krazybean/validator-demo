@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<!--
+ _____ ______   ________  ___  ___       ________  ___  ___  ________
+|\   _ \  _   \|\   __  \|\  \|\  \     |\   ____\|\  \|\  \|\   ___  \
+\ \  \\\__\ \  \ \  \|\  \ \  \ \  \    \ \  \___|\ \  \\\  \ \  \\ \  \
+ \ \  \\|__| \  \ \   __  \ \  \ \  \    \ \  \  __\ \  \\\  \ \  \\ \  \
+  \ \  \    \ \  \ \  \ \  \ \  \ \  \____\ \  \|\  \ \  \\\  \ \  \\ \  \
+   \ \__\    \ \__\ \__\ \__\ \__\ \_______\ \_______\ \_______\ \__\\ \__\
+    \|__|     \|__|\|__|\|__|\|__|\|_______|\|_______|\|_______|\|__| \|__|
+-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mailgun Email Validation Demo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-twilight.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+    
+        <div class="col-sm-12 mt-3">
+            <div class="jumbotron text-center">
+                <img class="image" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFk%0D%0Ab2JlIElsbHVzdHJhdG9yIDIxLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246%0D%0AIDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5z%0D%0APSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMu%0D%0Ab3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAi%0D%0AIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDEwMDAgMTAwMDsiIHhtbDpzcGFjZT0i%0D%0AcHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiNDMTIxMjY7fQo8%0D%0AL3N0eWxlPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDkzLDMwNS43Yy04OC45LDAtMTYxLDcyLjEt%0D%0AMTYxLDE2MWMwLDg4LjksNzIuMSwxNjEsMTYxLDE2MWM4OC45LDAsMTYxLTcyLjEsMTYxLTE2MQoJ%0D%0AQzY1NCwzNzcuOCw1ODIsMzA1LjcsNDkzLDMwNS43eiBNMjQyLDQ2Ni43YzAtMTM4LjcsMTEyLjQt%0D%0AMjUxLDI1MS0yNTFjMTM4LjcsMCwyNTEuMSwxMTIuNCwyNTEuMSwyNTFjMCw5LjItMC41LDE4LjIt%0D%0AMS40LDI3LjEKCWMtMS45LDI0LjUsMTYuMSw0My4yLDQwLjQsNDMuMmM0MS4zLDAsNDUuNy01My4y%0D%0ALDQ1LjctNzAuM2MwLTE4NS40LTE1MC4zLTMzNS42LTMzNS42LTMzNS42UzE1Ny40LDI4MS40LDE1%0D%0ANy40LDQ2Ni43CgljMCwxODUuNCwxNTAuMywzMzUuNiwzMzUuNiwzMzUuNmM5OC40LDAsMTg3LTQy%0D%0ALjQsMjQ4LjQtMTA5LjlsNjksNTcuOWMtNzcuOSw4Ny4xLTE5MS4zLDE0Mi0zMTcuNCwxNDIKCWMt%0D%0AMjM1LjEsMC00MjUuNy0xOTAuNi00MjUuNy00MjUuN1MyNTcuOSw0MSw0OTMsNDFjMjM1LjEsMCw0%0D%0AMjUuNywxOTAuNiw0MjUuNyw0MjUuN2MwLDk0LjUtNDUsMTcxLjItMTM1LjQsMTcxLjIKCWMtMzku%0D%0AOCwwLTY0LTE4LjItNzcuMi0zOC42QzY2MS45LDY3MC41LDU4Myw3MTcuOCw0OTMsNzE3LjhDMzU0%0D%0ALjQsNzE3LjgsMjQyLDYwNS40LDI0Miw0NjYuN3ogTTQ5MywzOTMuMWM0MC43LDAsNzMuNywzMyw3%0D%0AMy43LDczLjcKCWMwLDQwLjctMzMsNzMuNy03My43LDczLjdjLTQwLjcsMC03My43LTMzLTczLjct%0D%0ANzMuN1M0NTIuMywzOTMuMSw0OTMsMzkzLjF6Ii8+Cjwvc3ZnPgo=" alt="" width="72" height="72">
+                <h1>Email Validation Example</h1>
+                <p class="lead">Some examples of valid email addresses and how this library works.</p>
+            </div>
+        </div>
+    
+        <div class="col-sm-12">
+            <form id="validationForm" class="form-signup">
+                <div class="card card-body bg-info text-justify rounded">
+                    <strong>Bad Grammar Emails:</strong>
+                    <ul>
+                        <li><strong>john@gmail.com:</strong> Does not meet Gmail minimum local-part length of 6 characters.</li>
+                        <li><strong>john.smith@gmaill.com:</strong> Invalid, because gmaill.com does not have valid MX records.</li>
+                        <li><strong>john@microsoft.io:</strong> Invalid because while microsoft.io does not have any MX records.</li>
+                    </ul>
+                    <strong>Good Grammar Emails:</strong>
+                    <ul>
+                        <li><strong>john.smith@gmail.com:</strong> Meets Gmail 6 character minimum and all other requirements</li>
+                        <li><strong>"hello world"@domain.com:</strong> Meets pure syntax checks.</li>
+                    </ul>
+                </div>
+            
+                <div class="form-label-group mt-3">
+                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                </div>
+            
+                <div class="mx-auto">
+                    <div class="text-left">
+                        <pre id="validate" class="language-json" style="display:none"></pre>
+                    </div>
+                </div>
+            
+                <div class="checkbox mb-3">
+                    <label>
+                        <input id="mailboxVerification" type="checkbox" value="remember-me"> Mailbox Verification
+                    </label>
+                </div>
+            
+                <div id="captcha">
+                    <label id="captcha_label" for="captcha_value">Enter Answer: </label>
+                    <input type="text" id="captcha_value" class="text-input col-1">
+                    <span class="error btn-danger"></span>
+                </div>
+                <button id="validate_submit" class="btn btn-lg btn-primary btn-block" type="submit" disabled>Validate</button>
+            </form>
+        </div>
+    
+        <div class="col-sm-12 mt-3">
+            <h2>Code Example</h2>
+            <pre class="language-javascript">
+            function Validation() {
+              var emailBox = $("#inputEmail");
+              var email = emailBox.val();
+              var mail_verification = $("#mailboxVerification").is(":checked");
+              emailBox.mailgun({
+                'service': 'validate',
+                'email': email,
+                'api_key': 'MAILGUN_PUBKEY',
+                'mailbox_verification': mail_verification,
+                'success': success,
+                'error': error,
+              })
+             }
+            </pre>
+        </div>
+        
+        <div class="col-sm-12">
+            <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+        </div>
+        
+    </div>
+</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="validation_demo.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-javascript.min.js"></script> -->
+
+
+<script>
+  jQuery.noConflict();
+  (function ($) {
+
+    $("#validationForm").submit(function (e) {
+      e.preventDefault();
+      Validation();
+      return false
+    });
+
+    function Validation() {
+      let emailBox = $("#inputEmail");
+      let email = emailBox.val();
+      let mail_verification = $("#mailboxVerification").is(":checked");
+      emailBox.mailgun({
+        'service': 'validate',
+        'email': email,
+        'api_key': 'pubkey-a5a3b54de3c52b9303931a3c17f783a3',
+        'mailbox_verification': mail_verification,
+        'success': success,
+        'error': error,
+      })
+    }
+
+    function random(){
+      return Math.ceil(Math.random() * 10)
+    }
+
+    function update_captcha_label(number_1, number_2){
+      $("#captcha_label").html("Enter answer ( " + number_1 + " + " + number_2 + " )");
+    }
+
+    function submit_button_captcha(){
+        var number_1 = random();
+        var number_2 = random();
+        var final = number_1 + number_2;
+        update_captcha_label(number_1, number_2);
+        return final
+    }
+
+    function error(data){
+      var response_block = $("#validate");
+      response_block.empty();
+      response_block.html(
+        JSON.stringify(data,  null, '\t')
+      );
+      response_block.show("slow");
+      response_block.addClass('border-danger');
+      $("#inputEmail").val('');
+      $("#validationForm").trigger("reset");
+    }
+
+
+    function success(data){
+      var response_block = $("#validate");
+      response_block.empty();
+      response_block.html(
+        JSON.stringify(data,  null, '\t')
+        );
+      response_block.show("slow");
+      response_block.addClass('border-success');
+      $("#inputEmail").val('');
+      $("#validationForm").trigger("reset");
+    }
+
+    var final = submit_button_captcha();
+    var captcha_block = $("#captcha_value");
+    captcha_block.change(function(e){
+      if(captcha_block.val() === String(final)){
+        $("#validate_submit").removeAttr('disabled');
+      }else{
+       $('span.error').text('Wrong Answer. Please try again.');
+      }
+    });
+
+  })(jQuery);
+</script>
+</html>
